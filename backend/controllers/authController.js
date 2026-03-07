@@ -7,8 +7,6 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-
 // Generates a JWT containing id, role, and name.
 // Email is intentionally excluded — we fetch it from DB when needed.
 const generateToken = (user) => {
@@ -31,7 +29,7 @@ exports.signup = async (req, res) => {
         if (name.trim().length < 2) {
             return res.status(400).json({ message: 'Name must be at least 2 characters' })
         }
-        if (!EMAIL_REGEX.test(email)) {
+        if (!email.includes('@')) {
             return res.status(400).json({ message: 'Please enter a valid email address' })
         }
         if (password.length < 6) {
@@ -71,6 +69,9 @@ exports.login = async (req, res) => {
 
         if (!email || !password) {
             return res.status(400).json({ message: 'Email and password are required' })
+        }
+        if (!email.includes('@')) {
+            return res.status(400).json({ message: 'Please enter a valid email address' })
         }
         // Intentionally vague error ("Invalid credentials") to prevent user enumeration
         const user = await User.findOne({ email: email.toLowerCase() })

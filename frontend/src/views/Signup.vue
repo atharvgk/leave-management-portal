@@ -12,20 +12,19 @@ const errors  = reactive({ name: '', email: '', password: '', role: '' })
 const loading  = ref(false)
 const apiError = ref('')
 
-const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-
 function clearErrors() {
   errors.name = ''; errors.email = ''; errors.password = ''; errors.role = ''
   apiError.value = ''
 }
 
+// Basic validation for name and password length
 function validateForm() {
   clearErrors()
   let isValid = true
   if (!form.name.trim())                 { errors.name     = 'Full name is required';              isValid = false }
   else if (form.name.trim().length < 2)  { errors.name     = 'Name must be at least 2 characters'; isValid = false }
-  if (!form.email)                       { errors.email    = 'Email is required';                  isValid = false }
-  else if (!EMAIL_REGEX.test(form.email)){ errors.email    = 'Please enter a valid email address'; isValid = false }
+  
+  // Note: Email format and required fields are handled by native HTML5 form validation
   if (!form.password)                    { errors.password = 'Password is required';               isValid = false }
   else if (form.password.length < 6)     { errors.password = 'Password must be at least 6 characters'; isValid = false }
   if (!form.role)                        { errors.role     = 'Please select a role';               isValid = false }
@@ -54,7 +53,7 @@ async function submitSignup() {
 
 <template>
   <div class="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-    <div class="bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 w-full max-w-md my-8">
+    <form @submit.prevent="submitSignup" class="bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 w-full max-w-md my-8">
       <div class="text-center mb-8">
         <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">LeaveManager</h1>
         <p class="text-slate-500 text-sm mt-1">Create your account</p>
@@ -67,7 +66,7 @@ async function submitSignup() {
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-1.5">Full Name <span class="text-rose-500">*</span></label>
-          <input type="text" v-model="form.name" placeholder="John Doe"
+          <input type="text" v-model="form.name" placeholder="John Doe" required
             class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
             :class="errors.name ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200'" />
           <p v-if="errors.name" class="text-rose-500 text-xs font-medium mt-1.5">{{ errors.name }}</p>
@@ -75,7 +74,7 @@ async function submitSignup() {
 
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Address <span class="text-rose-500">*</span></label>
-          <input type="email" v-model="form.email" placeholder="you@company.com"
+          <input type="email" v-model="form.email" placeholder="you@company.com" required
             class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
             :class="errors.email ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200'" />
           <p v-if="errors.email" class="text-rose-500 text-xs font-medium mt-1.5">{{ errors.email }}</p>
@@ -83,7 +82,7 @@ async function submitSignup() {
 
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password <span class="text-rose-500">*</span></label>
-          <input type="password" v-model="form.password" placeholder="Minimum 6 characters"
+          <input type="password" v-model="form.password" placeholder="Minimum 6 characters" required minlength="6"
             class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
             :class="errors.password ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200'" />
           <p v-if="errors.password" class="text-rose-500 text-xs font-medium mt-1.5">{{ errors.password }}</p>
@@ -91,7 +90,7 @@ async function submitSignup() {
 
         <div class="pb-2">
           <label class="block text-sm font-semibold text-slate-700 mb-1.5">I am a... <span class="text-rose-500">*</span></label>
-          <select v-model="form.role"
+          <select v-model="form.role" required
             class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all appearance-none bg-white"
             :class="errors.role ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200'">
             <option value="">-- Select Role --</option>
@@ -102,7 +101,7 @@ async function submitSignup() {
         </div>
       </div>
 
-      <button @click="submitSignup" :disabled="loading"
+      <button type="submit" :disabled="loading"
         class="w-full mt-6 bg-slate-900 text-white rounded-xl py-3 font-semibold text-sm hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
         <span v-if="loading" class="animate-spin w-4 h-4 border-2 border-white/20 border-t-white rounded-full"></span>
         <span>{{ loading ? 'Creating Account...' : 'Create Account' }}</span>
@@ -113,6 +112,6 @@ async function submitSignup() {
         Already have an account?
         <RouterLink to="/login" class="text-teal-600 font-bold hover:text-teal-700 transition-colors">Log in</RouterLink>
       </p>
-    </div>
+    </form>
   </div>
 </template>

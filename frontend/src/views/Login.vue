@@ -22,10 +22,6 @@ onMounted(() => {
 
 async function submitLogin() {
   error.value = ''
-  if (!form.email.trim() || !form.password) {
-    error.value = 'Email and password are required'
-    return
-  }
   loading.value = true
   try {
     const res = await authAPI.login({ email: form.email, password: form.password })
@@ -45,7 +41,7 @@ async function submitLogin() {
 
 <template>
   <div class="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-    <div class="bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 w-full max-w-md">
+    <form @submit.prevent="submitLogin" class="bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 w-full max-w-md">
       <div class="text-center mb-8">
         <div class="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center shadow-lg shadow-teal-500/20 mb-4">
           <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -63,18 +59,16 @@ async function submitLogin() {
 
       <div class="mb-5">
         <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
-        <input type="email" v-model="form.email" placeholder="you@company.com"
-          @keyup.enter="submitLogin"
+        <input type="email" v-model="form.email" placeholder="you@company.com" required
           class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all" />
       </div>
       <div class="mb-8">
         <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
-        <input type="password" v-model="form.password" placeholder="••••••••"
-          @keyup.enter="submitLogin"
+        <input type="password" v-model="form.password" placeholder="••••••••" required
           class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all" />
       </div>
 
-      <button @click="submitLogin" :disabled="loading"
+      <button type="submit" :disabled="loading"
         class="w-full bg-slate-900 text-white rounded-xl py-3 font-semibold text-sm hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
         <span v-if="loading" class="animate-spin w-4 h-4 border-2 border-white/20 border-t-white rounded-full"></span>
         <span>{{ loading ? 'Signing in...' : 'Sign In' }}</span>
@@ -85,6 +79,6 @@ async function submitLogin() {
         Don't have an account?
         <RouterLink to="/signup" class="text-teal-600 font-bold hover:text-teal-700 transition-colors">Sign up</RouterLink>
       </p>
-    </div>
+    </form>
   </div>
 </template>
