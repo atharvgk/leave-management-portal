@@ -1,0 +1,10 @@
+# Forces Railway to use Node.js 18 and prevents misdetection of project type.
+
+[phases.setup]
+nixPkgs = ["nodejs_18"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[start]
+cmd = "npm start"
