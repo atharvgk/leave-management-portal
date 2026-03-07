@@ -1,0 +1,14 @@
+# Railway deployment config.
+# Tells Railway how to build and start the service.
+# rootDir is not needed here — the repo root is set in the Railway dashboard
+# by pointing the service to the /backend subdirectory.
+
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
