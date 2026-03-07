@@ -2,9 +2,9 @@
 
 ## Live Demo
 
-- **Frontend (Vercel):** [REPLACE WITH YOUR VERCEL URL]
-- **Backend API (Railway):** [REPLACE WITH YOUR RAILWAY URL]
-- **Health Check:** [RAILWAY_URL]/api/health
+- **Frontend (Vercel):** https://leave-management-portal-phi.vercel.app
+- **Backend API (Railway):** https://leave-management-portal-production.up.railway.app
+- **Health Check:** https://leave-management-portal-production.up.railway.app/api/health
 
 ## Demo Accounts
 
