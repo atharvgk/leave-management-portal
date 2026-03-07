@@ -44,47 +44,48 @@ async function submitLogin() {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-      <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">LeaveManager</h1>
-        <p class="text-gray-500 text-sm mt-1">Sign in to your account</p>
+  <div class="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+    <div class="bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 w-full max-w-md">
+      <div class="text-center mb-8">
+        <div class="w-14 h-14 mx-auto rounded-xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center shadow-lg shadow-teal-500/20 mb-4">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Welcome Back</h1>
+        <p class="text-slate-500 text-sm mt-1">Sign in to LeaveManager</p>
       </div>
 
-
-
-      <div v-if="successMessage" class="mb-4 p-3 bg-green-50 border border-green-200 text-green-700 rounded text-sm">
-        ✅ {{ successMessage }}
+      <div v-if="successMessage" class="mb-5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-xl text-sm font-medium flex items-center gap-2">
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        {{ successMessage }}
       </div>
-      <div v-if="error" class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded text-sm">
-        ❌ {{ error }}
+      <div v-if="error" class="mb-5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 rounded-xl text-sm font-medium flex items-center gap-2">
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        {{ error }}
       </div>
 
-      <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-        <input type="email" v-model="form.email" placeholder="you@example.com"
+      <div class="mb-5">
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
+        <input type="email" v-model="form.email" placeholder="you@company.com"
           @keyup.enter="submitLogin"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all" />
       </div>
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-        <input type="password" v-model="form.password" placeholder="••••••"
+      <div class="mb-8">
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
+        <input type="password" v-model="form.password" placeholder="••••••••"
           @keyup.enter="submitLogin"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all" />
       </div>
 
       <button @click="submitLogin" :disabled="loading"
-        class="w-full bg-blue-600 text-white py-2.5 rounded font-semibold text-sm hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-        <span v-if="loading" class="flex items-center justify-center gap-2">
-          <span class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full inline-block"></span>
-          Logging in...
-        </span>
-        <span v-else>Login</span>
+        class="w-full bg-slate-900 text-white rounded-xl py-3 font-semibold text-sm hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+        <span v-if="loading" class="animate-spin w-4 h-4 border-2 border-white/20 border-t-white rounded-full"></span>
+        <span>{{ loading ? 'Signing in...' : 'Sign In' }}</span>
+        <svg v-if="!loading" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
       </button>
 
-      <p class="text-center text-sm text-gray-500 mt-4">
+      <p class="text-center text-sm text-slate-500 mt-6">
         Don't have an account?
-        <RouterLink to="/signup" class="text-blue-600 font-medium hover:underline">Sign up</RouterLink>
+        <RouterLink to="/signup" class="text-teal-600 font-bold hover:text-teal-700 transition-colors">Sign up</RouterLink>
       </p>
     </div>
   </div>
