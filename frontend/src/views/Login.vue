@@ -47,17 +47,11 @@ async function submitLogin() {
   <div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <div class="text-center mb-6">
-        <div class="text-4xl mb-2">🗓️</div>
         <h1 class="text-2xl font-bold text-gray-800">LeaveManager</h1>
         <p class="text-gray-500 text-sm mt-1">Sign in to your account</p>
       </div>
 
-      <!-- Demo credentials hint for reviewers -->
-      <div class="mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-700 rounded text-xs">
-        <strong>Demo accounts:</strong><br/>
-        Employee: employee@test.com / password123<br/>
-        Employer: manager@test.com / password123
-      </div>
+
 
       <div v-if="successMessage" class="mb-4 p-3 bg-green-50 border border-green-200 text-green-700 rounded text-sm">
         ✅ {{ successMessage }}

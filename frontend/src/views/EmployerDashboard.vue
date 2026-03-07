@@ -32,46 +32,62 @@ onMounted(() => fetchLeaves())
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto p-6">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Employer Dashboard</h1>
-
-    <!-- Summary stat cards -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-      <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center">
-        <p class="text-3xl font-bold text-gray-800">{{ total }}</p>
-        <p class="text-sm text-gray-500 mt-1">Total</p>
-      </div>
-      <div class="bg-yellow-50 rounded-lg shadow-sm border border-yellow-200 p-4 text-center">
-        <p class="text-3xl font-bold text-yellow-600">{{ pending }}</p>
-        <p class="text-sm text-yellow-600 mt-1">Pending</p>
-      </div>
-      <div class="bg-green-50 rounded-lg shadow-sm border border-green-200 p-4 text-center">
-        <p class="text-3xl font-bold text-green-600">{{ approved }}</p>
-        <p class="text-sm text-green-600 mt-1">Approved</p>
-      </div>
-      <div class="bg-red-50 rounded-lg shadow-sm border border-red-200 p-4 text-center">
-        <p class="text-3xl font-bold text-red-600">{{ rejected }}</p>
-        <p class="text-sm text-red-600 mt-1">Rejected</p>
-      </div>
-    </div>
-
-    <!-- All leave requests table -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-semibold text-gray-700">All Leave Requests</h2>
-        <button @click="fetchLeaves" class="text-sm text-blue-600 hover:underline">Refresh</button>
+  <div class="min-h-screen bg-gray-50/50 py-10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="mb-8">
+        <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 tracking-tight">Employer Dashboard</h1>
+        <p class="text-gray-500 mt-2">Overview of all employee time off requests and approvals.</p>
       </div>
 
-      <div v-if="loading" class="flex items-center justify-center py-10 text-gray-400">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-3"></div>
-        <span>Loading...</span>
+      <!-- Summary stat cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+          <div class="text-gray-500 text-sm font-semibold uppercase tracking-wider mb-2">Total Requests</div>
+          <div class="text-4xl font-extrabold text-gray-800">{{ total }}</div>
+        </div>
+        
+        <div class="bg-gradient-to-b from-yellow-50 to-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-yellow-100 p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+          <div class="text-yellow-600 text-sm font-semibold uppercase tracking-wider mb-2">Pending</div>
+          <div class="text-4xl font-extrabold text-yellow-600">{{ pending }}</div>
+        </div>
+        
+        <div class="bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-green-100 p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+          <div class="text-green-600 text-sm font-semibold uppercase tracking-wider mb-2">Approved</div>
+          <div class="text-4xl font-extrabold text-green-600">{{ approved }}</div>
+        </div>
+        
+        <div class="bg-gradient-to-b from-red-50 to-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-red-100 p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+          <div class="text-red-600 text-sm font-semibold uppercase tracking-wider mb-2">Rejected</div>
+          <div class="text-4xl font-extrabold text-red-600">{{ rejected }}</div>
+        </div>
       </div>
-      <div v-else-if="error" class="text-center py-6">
-        <p class="text-red-500 text-sm">{{ error }}</p>
-        <button @click="fetchLeaves" class="mt-2 text-blue-600 text-sm hover:underline">Try again</button>
+
+      <!-- All leave requests table -->
+      <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 p-8 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+          <div class="flex items-center gap-3">
+            <div class="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800">Team Leave Requests</h2>
+          </div>
+          <button @click="fetchLeaves" class="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-lg transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            Refresh List
+          </button>
+        </div>
+
+        <div v-if="loading" class="flex flex-col items-center justify-center py-12 text-gray-400">
+          <div class="animate-spin rounded-full h-10 w-10 border-4 border-gray-100 border-t-indigo-600 mb-4"></div>
+          <span class="font-medium animate-pulse">Loading team requests...</span>
+        </div>
+        <div v-else-if="error" class="text-center py-10 bg-red-50 rounded-xl border border-red-100">
+          <p class="text-red-600 font-medium mb-2">{{ error }}</p>
+          <button @click="fetchLeaves" class="px-4 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold hover:bg-red-200 transition-colors">Try again</button>
+        </div>
+        <!-- @action-taken re-fetches after approve/reject so stats update immediately -->
+        <LeaveTable v-else :leaves="leaves" :isEmployer="true" @action-taken="fetchLeaves" />
       </div>
-      <!-- @action-taken re-fetches after approve/reject so stats update immediately -->
-      <LeaveTable v-else :leaves="leaves" :isEmployer="true" @action-taken="fetchLeaves" />
     </div>
   </div>
 </template>

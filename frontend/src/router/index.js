@@ -6,13 +6,14 @@
 //   requiresGuest: must NOT be logged in (logged-in users redirected to their dashboard)
 
 import { createRouter, createWebHistory } from 'vue-router'
+import Landing from '../views/Landing.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import EmployeeDashboard from '../views/EmployeeDashboard.vue'
 import EmployerDashboard from '../views/EmployerDashboard.vue'
 
 const routes = [
-    { path: '/', redirect: '/login' },
+    { path: '/', component: Landing, meta: { requiresGuest: true } },
     { path: '/login', component: Login, meta: { requiresGuest: true } },
     { path: '/signup', component: Signup, meta: { requiresGuest: true } },
     {

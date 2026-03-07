@@ -81,73 +81,73 @@ async function submitForm() {
 
 <template>
   <div>
-    <div v-if="successMessage" class="mb-4 p-3 bg-green-50 border border-green-200 text-green-700 rounded text-sm">
-      ✅ {{ successMessage }}
+    <div v-if="successMessage" class="mb-5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-xl text-sm font-medium flex items-center gap-2">
+      <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+      {{ successMessage }}
     </div>
-    <div v-if="apiError" class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded text-sm">
-      ❌ {{ apiError }}
+    <div v-if="apiError" class="mb-5 p-3.5 bg-rose-50 border border-rose-100 text-rose-700 rounded-xl text-sm font-medium flex items-center gap-2">
+      <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      {{ apiError }}
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
       <!-- Leave Type -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          Leave Type <span class="text-red-500">*</span>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+          Leave Type <span class="text-rose-500">*</span>
         </label>
         <select v-model="form.leaveType"
-          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          :class="errors.leaveType ? 'border-red-400' : 'border-gray-300'">
+          class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all appearance-none bg-white"
+          :class="errors.leaveType ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200 hover:border-slate-300'">
           <option value="">-- Select Leave Type --</option>
           <option v-for="type in LEAVE_TYPES" :key="type" :value="type">{{ type }}</option>
         </select>
-        <p v-if="errors.leaveType" class="text-red-500 text-xs mt-1">{{ errors.leaveType }}</p>
+        <p v-if="errors.leaveType" class="text-rose-500 text-xs font-medium mt-1.5">{{ errors.leaveType }}</p>
       </div>
 
       <div class="hidden md:block"></div>
 
       <!-- Start Date -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          Start Date <span class="text-red-500">*</span>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+          Start Date <span class="text-rose-500">*</span>
         </label>
         <input type="date" v-model="form.startDate" :min="today"
-          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          :class="errors.startDate ? 'border-red-400' : 'border-gray-300'" />
-        <p v-if="errors.startDate" class="text-red-500 text-xs mt-1">{{ errors.startDate }}</p>
+          class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all text-slate-700"
+          :class="errors.startDate ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200 hover:border-slate-300'" />
+        <p v-if="errors.startDate" class="text-rose-500 text-xs font-medium mt-1.5">{{ errors.startDate }}</p>
       </div>
 
       <!-- End Date -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          End Date <span class="text-red-500">*</span>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+          End Date <span class="text-rose-500">*</span>
         </label>
         <input type="date" v-model="form.endDate" :min="form.startDate || today"
-          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          :class="errors.endDate ? 'border-red-400' : 'border-gray-300'" />
-        <p v-if="errors.endDate" class="text-red-500 text-xs mt-1">{{ errors.endDate }}</p>
+          class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all text-slate-700"
+          :class="errors.endDate ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200 hover:border-slate-300'" />
+        <p v-if="errors.endDate" class="text-rose-500 text-xs font-medium mt-1.5">{{ errors.endDate }}</p>
       </div>
 
       <!-- Reason -->
       <div class="md:col-span-2">
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          Reason <span class="text-red-500">*</span>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+          Reason <span class="text-rose-500">*</span>
         </label>
         <textarea v-model="form.reason" rows="3"
           placeholder="Please describe your reason for leave..."
-          class="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-          :class="errors.reason ? 'border-red-400' : 'border-gray-300'"></textarea>
-        <p v-if="errors.reason" class="text-red-500 text-xs mt-1">{{ errors.reason }}</p>
+          class="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none transition-all placeholder:text-slate-400"
+          :class="errors.reason ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200 hover:border-slate-300'"></textarea>
+        <p v-if="errors.reason" class="text-rose-500 text-xs font-medium mt-1.5">{{ errors.reason }}</p>
       </div>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-6 flex justify-end">
       <button @click="submitForm" :disabled="loading"
-        class="bg-blue-600 text-white px-6 py-2 rounded text-sm font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-        <span v-if="loading" class="flex items-center gap-2">
-          <span class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full inline-block"></span>
-          Submitting...
-        </span>
-        <span v-else>Apply for Leave</span>
+        class="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 min-w-[160px]">
+        <span v-if="loading" class="animate-spin w-4 h-4 border-2 border-white/20 border-t-white rounded-full"></span>
+        <span>{{ loading ? 'Submitting...' : 'Apply for Leave' }}</span>
+        <svg v-if="!loading" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
       </button>
     </div>
   </div>
