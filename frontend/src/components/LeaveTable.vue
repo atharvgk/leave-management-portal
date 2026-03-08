@@ -121,13 +121,13 @@ async function handleReject(leaveId) {
           class="hover:bg-indigo-50/30 transition-colors group">
           
           <template v-if="isEmployer">
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap align-top">
               <div class="font-bold text-gray-900">{{ leave.employeeName }}</div>
               <div class="text-xs text-gray-500 mt-0.5">{{ leave.employeeEmail }}</div>
             </td>
           </template>
 
-          <td class="px-6 py-4 whitespace-nowrap">
+          <td class="px-6 py-4 whitespace-nowrap align-top">
             <span class="inline-flex items-center gap-1.5 font-medium text-gray-800">
               <span class="w-2 h-2 rounded-full" :class="{
                 'bg-blue-400': leave.leaveType === 'Sick Leave',
@@ -139,20 +139,20 @@ async function handleReject(leaveId) {
             <div class="text-xs text-gray-500 mt-1 font-medium">{{ getDuration(leave.startDate, leave.endDate) }}</div>
           </td>
 
-          <td class="px-6 py-4 whitespace-nowrap text-gray-600">
+          <td class="px-6 py-4 whitespace-nowrap text-gray-600 align-top">
             <div>{{ formatDate(leave.startDate) }}</div>
             <div class="text-xs text-gray-400 mt-0.5">to {{ formatDate(leave.endDate) }}</div>
           </td>
 
-          <td class="px-6 py-4 text-gray-600">
-            <p class="truncate max-w-[200px] sm:max-w-xs text-sm" :title="leave.reason">{{ leave.reason || '—' }}</p>
+          <td class="px-6 py-4 text-gray-600 align-top">
+            <p class="whitespace-pre-wrap break-words min-w-[200px] max-w-xs sm:max-w-md text-sm" :title="leave.reason">{{ leave.reason || '—' }}</p>
           </td>
 
-          <td class="px-6 py-4 whitespace-nowrap">
+          <td class="px-6 py-4 whitespace-nowrap align-top">
             <StatusBadge :status="leave.status" />
           </td>
 
-          <td class="px-6 py-4 whitespace-nowrap text-right">
+          <td class="px-6 py-4 whitespace-nowrap text-right align-top">
             <template v-if="isEmployer">
               <div v-if="leave.status === 'Pending'" class="flex justify-end gap-2 transition-opacity">
                 <button @click="handleApprove(leave._id)" :disabled="!!actionLoading[leave._id]"
