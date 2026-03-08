@@ -14,6 +14,7 @@ const form           = reactive({ email: '', password: '' })
 const loading        = ref(false)
 const error          = ref('')
 const successMessage = ref('')
+const showPassword   = ref(false)
 
 // Pick up ?success= query param set by Signup.vue after account creation
 onMounted(() => {
@@ -64,8 +65,14 @@ async function submitLogin() {
       </div>
       <div class="mb-8">
         <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
-        <input type="password" v-model="form.password" placeholder="••••••••" required
-          class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all" />
+        <div class="relative">
+          <input :type="showPassword ? 'text' : 'password'" v-model="form.password" placeholder="••••••••" required
+            class="w-full border border-slate-200 rounded-xl pl-4 pr-16 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all password-input" />
+          <button type="button" @click="showPassword = !showPassword" tabindex="-1"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-teal-600 hover:text-teal-700 font-medium text-xs px-2 py-1 bg-teal-50/50 hover:bg-teal-50 rounded transition-colors">
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </div>
       </div>
 
       <button type="submit" :disabled="loading"

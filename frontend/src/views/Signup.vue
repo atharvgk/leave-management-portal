@@ -11,6 +11,7 @@ const form    = reactive({ name: '', email: '', password: '', role: '' })
 const errors  = reactive({ name: '', email: '', password: '', role: '' })
 const loading  = ref(false)
 const apiError = ref('')
+const showPassword = ref(false)
 
 function clearErrors() {
   errors.name = ''; errors.email = ''; errors.password = ''; errors.role = ''
@@ -82,9 +83,15 @@ async function submitSignup() {
 
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password <span class="text-rose-500">*</span></label>
-          <input type="password" v-model="form.password" placeholder="Minimum 6 characters" required minlength="6"
-            class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
-            :class="errors.password ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200'" />
+          <div class="relative">
+            <input :type="showPassword ? 'text' : 'password'" v-model="form.password" placeholder="Minimum 6 characters" required minlength="6"
+              class="w-full border rounded-xl pl-4 pr-16 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all password-input"
+              :class="errors.password ? 'border-rose-400 focus:ring-rose-500 bg-rose-50/50' : 'border-slate-200'" />
+            <button type="button" @click="showPassword = !showPassword" tabindex="-1"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-teal-600 hover:text-teal-700 font-medium text-xs px-2 py-1 bg-teal-50/50 hover:bg-teal-50 rounded transition-colors">
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
           <p v-if="errors.password" class="text-rose-500 text-xs font-medium mt-1.5">{{ errors.password }}</p>
         </div>
 
